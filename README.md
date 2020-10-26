@@ -18,7 +18,7 @@ When using the generator, the following tag options can be added to a stem:
 - Ending tags: +Inf (A-infinitive suffix, must be added after derivational tags) 
 
 Ex 1. Generating word forms:  
-`down kala+N+Caus+Inf`
+`down kala+N+Caus+Inf`  
 Output:  
 `kalastaa   
 kalattaa   
