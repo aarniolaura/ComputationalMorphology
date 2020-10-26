@@ -7,9 +7,9 @@ The aim of this project was to analyze noun-to-verb and adjective-to-verb deriva
 The final analyzer-generator  consists of a lexc file (derivation_lexicon.lexc) and an xfst file (derivation_rules.xfst). The lexc file contains the noun and adjective stem lexicons, and all the suffixes. The xfst file contains rules for sound changes that happen when suffixes are added, either in the suffixes themselves or in the stems. They also contain Finnish vowel harmony rules.
 
 To start the analyzer-generator type  
-hfst-xfst  
-and then type 
-source derivation_rules.xfst  
+`hfst-xfst`  
+and then type  
+`source derivation_rules.xfst`  
 
 When using the generator, the following tag options can be added to a stem:  
 - POS tags: +N (noun stem) or +A (adjective stem) 
@@ -18,8 +18,13 @@ When using the generator, the following tag options can be added to a stem:
 - Ending tags: +Inf (A-infinitive suffix, must be added after derivational tags) 
 
 Ex 1. Generating word forms:  
-down kala+N+Caus+Inf
+`down kala+N+Caus+Inf`
+Output:  
+`kalastaa   
+kalattaa   
+kaloittaa`  
 
 Ex 2. Analyzing word forms:  
-up harrastella
-
+`up harrastella`  
+Output:  
+`harras+A+Caus+Freq+Inf `  
