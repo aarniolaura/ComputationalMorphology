@@ -6,7 +6,7 @@ The aim of this project was to analyze noun-to-verb and adjective-to-verb deriva
 
 The final analyzer-generator  consists of a lexc file (derivation_lexicon.lexc) and an xfst file (derivation_rules.xfst). The lexc file contains the noun and adjective stem lexicons, and all the suffixes. The xfst file contains rules for sound changes that happen when suffixes are added, either in the suffixes themselves or in the stems. They also contain Finnish vowel harmony rules.
 
-To start the analyzer-generator type  
+To start the analyzer-generator from command line type  
 `hfst-xfst`  
 and then type  
 `source derivation_rules.xfst`  
