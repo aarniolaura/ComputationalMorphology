@@ -28,3 +28,10 @@ Ex 2. Analyzing word forms:
 `up harrastella`  
 Output:  
 `harras+A+Caus+Freq+Inf `  
+
+#### Bibliography:
+Karlsson, F. 2009. Suomen peruskielioppi. 4th, extended and revised ed. Helsinki: Suomalaisen Kirjallisuuden Seura. 
+
+VISK § 303–370. 
+
+VISK = Auli Hakulinen, Maria Vilkuna, Riitta Korhonen, Vesa Koivisto, Tarja Riitta Heinonen & Irja Alho 2004: Iso suomen kielioppi. Helsinki: Suomalaisen Kirjallisuuden Seura. Online version, retrieved 8.3.2020 from: http://scripta.kotus.fi/visk URN:ISBN:978-952-5446-35-7 
