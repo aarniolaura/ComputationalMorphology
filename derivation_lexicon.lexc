@@ -1,0 +1,211 @@
+!!!!!!!! LEXICON FOR NOMINAL-TO-VERB DERIVATION IN FINNISH !!!!!!!!!
+
+Multichar_Symbols
+	+N 		! Noun tag
+	+A	 	! Adjective tag
+	+Caus	! Causative suffix
+	+Transl	! Translative suffix
+	+Freq	! Frequentative suffix
+	+Inf	! A-Infinitive suffix
+! ------ Stem endings----------------!
+	@U.END.C@	! consonant ending stem
+	@R.END.C@	! require cons ending stem
+	@D.END.C@	! (disallow cons ending ->) vowel ending stem
+	@U.END.U@	! u- or y-ending stem
+	@D.END.U@	! disallow u/y-ending
+	@U.END.A@	! a- or ä-ending stem
+	@R.END.A@	! require a/ä-ending stem
+	@D.END.A@	! disallow a/ä-ending
+! ------ Adjective endings----------------!
+	@U.ADJ.EA@	! adjective ending in -eA, -ee or -aa
+	@R.ADJ.EA@	! require -eA, -ee or -aa-ending
+! -------Gradation -----------------------!
+	@U.GRAD.S@	! strong form of stem ("kunto-", not "kunno-")
+	@D.GRAD.S@	! disallow strong form
+	@U.GRAD.W@	! weak form of stem ("kunno-", not "kunto-"
+	@D.GRAD.W@	! disallow weak from
+!-------- Number of syllables ------------!
+	@U.SYL.2@	! 2 syllables in stem
+	@R.SYL.2@	! require 2 syllables
+	@U.SYL.3@	! 3 syllables in stem
+	@R.SYL.3@	! require 3 syllables
+		
+
+LEXICON Root
+	Nouns ;
+	Adjectives ; 
+
+!---------------- NOUN STEMS -----------------!
+
+LEXICON Nouns
+@U.SYL.3@:@U.SYL.3@	Nouns3Syl ;
+@U.SYL.2@:@U.SYL.2@	Nouns2Syl ;
+
+LEXICON Nouns2Syl
+@U.END.A@:@U.END.A@     NounsEndsA ;
+arvo			N ;
+kunto@U.GRAD.W@:kunno@U.GRAD.W@		N ;
+kunto@U.GRAD.S@:kunto@U.GRAD.S@		N ;
+jarru@U.END.U@		N ;
+paino			N ;
+sammal@U.END.C@		N ;
+sävel@U.END.C@		N ;
+sieni:siene		N ;
+sävy@U.END.U@		N ;
+savu@U.END.U@		N ;
+teho			N ;
+teksti			N ;
+tieto:tiedo@U.GRAD.W@	N ;
+tieto@U.GRAD.S@		N ;
+
+LEXICON NounsEndsA
+haara                   N ;
+haava                   N ;
+harha                   N ;
+aika:aja@U.GRAD.W@      N ;
+aika@U.GRAD.S@          N ;
+kala			N ;
+maja			N ;
+marja			N ;
+
+LEXICON Nouns3Syl
+ankkuri        	N ;
+raunio         	N ;
+vartio		N ;
+henkilö       	N ;
+luettelo	N ;
+idea@U.END.A@	N ;
+kunnia@U.END.A@	N ;
+
+!--------------- ADJECTIVE STEMS ---------------!
+
+LEXICON Adjectives
+@U.END.C@:@U.END.C@		InenAdjectives ;
+@U.ADJ.EA@:@U.ADJ.EA@		EaAdjectives ;
+@U.SYL.3@:@U.SYL.3@		Adj3Syl;
+0:0				OtherAdjectives ;
+
+LEXICON InenAdjectives
+havainnollinen		A ;
+itsenäinen		A ;
+kurinalainen		A ;
+kansallinen		A ;
+kaupallinen		A ;
+kerronnallinen		A ;
+koneellinen		A ; 
+käsitteellinen		A ;
+maallinen		A ;
+myöhäinen		A ;
+suomalainen		A ;
+
+
+LEXICON EaAdjectives 	! Adjectives ending in -AA, -eA or -ee
+ankea           A ;
+kapea           A ;
+eheä		A ;
+kiinteä		A ;
+kostea 		A ;
+nopea		A ;
+vapaa           A ;
+tuore		A ; ! the stem is actually "tuoree-" -> "tuoree-n" etc.
+
+LEXICON Adj3Syl 	! Adjectives with 3-syllable stems
+autio		A ;
+rehevä		A ;
+katkera 	A ;
+kitkerä		A ;
+hankala		A ;
+vakava		A ;
+
+LEXICON OtherAdjectives
+harras@U.END.C@		A ;
+kaunis@U.END.C@		A ;
+kirkas@U.END.C@		A ;
+kumara:kumar@U.END.C@	A ;
+rikas@U.END.C@		A ;
+
+!--------------------- DERIVATION --------------------!
+
+LEXICON N
++N:^	DerivationNouns ;
+
+LEXICON A
++A:^	DerivationAdj ;
+
+LEXICON DerivationNouns
+0:0		# ;		! no derivation
+0:0		CausativeNouns ;
+0:0		TranslativeNouns ;
+! 0@D.GRAD.W@:0@D.GRAD.W@		Frequentative ; ! -ele and -ile with strong forms (NOT IN USE FOR NOW)
+
+LEXICON DerivationAdj
+0:0             # ;             ! no derivation
+0:0             CausativeAdj ;
+0:0             TranslativeAdj ;
+
+
+! -------------- DERIVATIVE SUFFIXES WITH A GENERALLY CAUSATIVE MEANING ------------------- ! (+Caus used as tag)
+
+! ---------------------Nouns------------------------!
+LEXICON CausativeNouns
+@R.SYL.2@:@R.SYL.2@	CausNoun2 ;
+@R.SYL.3@:@R.SYL.3@     CausNoun3 ;
+
+LEXICON CausNoun2
++Caus@R.END.C@:tA@R.END.C@ 				FreqOrEnding ; ! 2-syllable C-ending stems: "mainos-taa"
++Caus@D.END.C@@D.GRAD.S@:ttA@D.END.C@@D.GRAD.S@		FreqOrEnding ; ! weak 2-syllable V-ending stems: "jarru-ttaa"
++Caus@D.END.C@@D.GRAD.S@:stA@D.END.C@@D.GRAD.S@ 	FreqOrEnding ; ! weak 2-syllable V-ending stems: "tiedo-staa"
++Caus@R.END.A@@D.GRAD.S@:ittA@R.END.A@@D.GRAD.S@	FreqOrEnding ; ! weak 2-syllable A-ending stems: "lahja" -> "lahjo-itta-a"
+
+LEXICON CausNoun3
++Caus@R.END.A@:ittA@R.END.A@				VerbEnding ; ! 3-syllable A-ending stem "kunnio-itta-a"
++Caus@D.END.C@:Oi@D.END.C@			 	VerbEnding ; ! weak 3-syllable A/i/O-ending stem
+
+! ---------------------Adjectives---------------------!
+LEXICON CausativeAdj
++Caus@R.END.C@:tA@R.END.C@                  FreqOrEnding ; ! 2-syllable C-ending "kaunis-taa" or -inen adjectives
++Caus@R.ADJ.EA@:UttA@R.ADJ.EA@				FreqOrEnding ; ! eA-ending "koste-uttaa" OR ee/AA-ending stems: "vapa-utta-a" 
++Caus@R.SYL.3@:OittA@R.SYL.3@				FreqOrEnding ; ! 3-syllable A-ending stems "rehev-öittä-ä"
+
+
+! ------- DERIVATIVE SUFFIXES WITH A TRANSLATIVE, RECEPTIVE OR DIRECTIONAL MEANING ------------ ! (+Transl used as tag)
+
+! ---------------------Nouns------------------------!
+LEXICON TranslativeNouns
+@R.SYL.2@:@R.SYL.2@	TranslNoun2 ;
+@R.SYL.3@:@R.SYL.3@     TranslNoun3 ;
+
+LEXICON TranslNoun2
++Transl@D.END.C@@D.END.U@@D.GRAD.W@:UtU@D.END.C@@D.END.U@@D.GRAD.W@	VerbEnding ; ! strong 2-syl V-ending (but not U-ending) stems "muoto-utu-a", "selke-yty-ä"
++Transl@D.END.C@@D.END.A@@D.GRAD.S@:ttU@D.END.C@@D.END.A@@D.GRAD.S@	VerbEnding ; ! weak 2-syl V-ending (but not A-ending) stems "paino-ttu-a" // compare to -ttA
++Transl@R.END.A@@D.GRAD.S@:ittU@R.END.A@@D.GRAD.S@	VerbEnding ; ! weak 2-syl A-ending stems "haara" -> "haaro-ittu-a"
++Transl@R.END.C@:OitU@R.END.C@				VerbEnding ; ! 2-syl C-ending noun: "sammal-oitu-a" // counterpart caus. -Oi
+
+LEXICON TranslNoun3
++Transl:OitU				VerbEnding ; ! 3-syllable stems "ankkur-oitu-a" // counterpart caus. -Oi
+
+! ---------------------Adjectives---------------------!
+LEXICON TranslativeAdj
++Transl@R.END.C@:tU@R.END.C@				VerbEnding ; ! c-ending stems, e.g. -inen-adjectives
++Transl@R.ADJ.EA@:UtU@R.ADJ.EA@     			VerbEnding ; ! -eA/-AA/-ee-ending stems: "vapa-utu-a" // counterpart caus. -UttA 
++Transl@R.SYL.3@:OitU@R.SYL.3@                          VerbEnding ; ! 3-syllable stems "rehev-öity-ä" // counterpart caus. -Oitta
+
+
+!------------------ POSSIBLE ENDINGS ---------------------------------- !
+LEXICON FreqOrEnding    ! for causative verbs
+        Frequentative ;
+        VerbEnding ;
+
+
+! ------- DERIVATIVE SUFFIXES WITH A FREQUENTATIVE MEANING ------------ ! (+Freq used as tag)
+
+LEXICON Frequentative
+! +Freq:ile		VerbEnding ; ! mostly to nominal stems: "kunto-ill-a"
+ +Freq:ele		VerbEnding ; ! can be added to most causative verbs: "kunno-st-ell-a"
+
+
+LEXICON VerbEnding
++Inf:%#A	# ; ! A-infinitive ending
+
+
+END

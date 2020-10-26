@@ -1,0 +1,70 @@
+!!!!!!!! RULES FOR NOMINAL-TO-VERB DERIVATION IN FINNISH !!!!!!!!!
+
+clear stack
+
+! Read lexicon and make a regex of it
+read lexc derivation_lexicon.lexc
+define Lexicon ;
+regex Lexicon ;
+
+define Vowel [ a | e | i | o | u | y | ä | ö ] ;
+define Cons  [ b | c | d | f | g | h | j | k | l | m | 
+               n | p | q | r | s | t | v | w | x | z ] ;
+
+!-------- Sound changes caused by derivation ---------!
+
+! Sound changes in +Freq -ele suffix: "kalasta-ele-a" -> "kalasta-ell-a"
+define EleToInf e -> l || l _ (?) %# [ a | ä ] ;
+
+! Sound changes in stem caused by +Freq -ele suffix: "kalasta-ell-a" -> "kalast-ell-a" 
+define AellaToElla [ a | ä ] -> 0 || _ ("@D.END.C@" | "@R.END.C@" | "@R.END.A@" | "@R.ADJ.EA@") ("@D.GRAD.S@") ("@R.SYL.2@" | "@R.SYL.3@")  e l l %# ;
+
+! Gradation in stem caused by +Freq -ele suffix: "jarrutt-ell-a" -> "jarrut-ell-a"
+define TToZero t -> 0 || _ t ("@D.END.C@" | "@R.END.A@" | "@R.ADJ.EA@") ("@D.GRAD.S@") ("@R.SYL.2@" | "@R.SYL.3@") e l l %# ;
+
+! Gradation of t after l or r: "sammal-t-ella" -> "sammal-l-ell-a"
+define TToL t -> l || l ("@U.END.C@") %^ ("@R.SYL.2@") _ ("@R.END.C@") ("@R.SYL.2@") e l l %# ; 
+define TToR t -> r || r ("@U.END.C@") %^ ("@R.SYL.2@") _ ("@R.END.C@") ("@R.SYL.2@") e l l %# ;
+
+! Final a/ä omitted before UtU and UttA ending in -eA and -aa ending stems: "kostea" -> "koste-utta-a"
+define AToZero [ a | ä ] -> 0 || [ e | a ] _ (?) %^ [ u | y ] t ;
+
+! Vowel omitted before -Oi and -OitU suffixes: "raunio" -> "rauni-oitu-a"
+define VowelToZero [ a | e | i | o | u | y | ä | ö ] -> 0 || _ ("@U.END.A@") %^ ("@R.SYL.2@" | "@R.SYL.3@")  [ o | ö ] i ;
+
+! Final a changes to o before -ittA/-ittU suffix: "kunnia" -> "kunnio-itta-a" (but not ä! "metsä" -> mets-ittä-ä")
+define AToO a -> o || _ ("@U.GRAD.W@") ("@U.END.A@") %^ ("@R.SYL.2@" | "@R.SYL.3@") i t t ; 
+
+! -inen changes to -is in adjectives before suffix
+define InenToIs {inen} -> {is} || _ %^ t ;
+
+! Infinitive -A becomes -dA after -oi- suffix: "idea" -> "ide-oi-da"
+define AToDa 0 -> d || [ o | ö ] i ("@R.SYL.3@") ("@D.END.C@") %# _ [ a | ä ] ;
+
+!------- Vowel harmony rules ----------!
+
+define SetBackVowel A -> a, O -> o, U -> u || [ a | o | u ] ?* _ ;
+define SetFrontVowel A -> ä, O -> ö, U -> y || _ ;
+
+!---------- Delete boundary markers --------!
+define CleanUp  %^ -> 0, %# -> 0 ;
+
+! Compose lexicon with rules
+regex Lexicon 
+	.o. SetBackVowel 
+	.o. SetFrontVowel
+	.o. AToZero 
+	.o. VowelToZero
+	.o. AToO
+	.o. AToDa
+	.o. InenToIs
+	.o. EleToInf
+	.o. AellaToElla
+	.o. TToZero
+	.o. TToL
+	.o. TToR
+	.o. CleanUp ;
+
+! Output all surface forms of the words
+lower-words
+
